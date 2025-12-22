@@ -3,7 +3,11 @@ import { LitElement, html } from "lit";
 class DetailPage extends LitElement {
 
     render() {
-        return html`<p>Detail Page</p>`;
+        return html`
+            <div>
+                <h2>Detail Page</h2>
+            </div>
+        `;
     }
 }
 
