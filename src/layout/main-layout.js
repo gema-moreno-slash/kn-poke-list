@@ -36,7 +36,6 @@ class MainLayout extends LitElement {
             <div class="mainCont">
                 <main-header></main-header>
                 <main class="main">
-                    <h2>MainLayout</h2>
                     <p>${this.router.outlet()}</p>
                 </main>
                 <main-footer></main-footer>
