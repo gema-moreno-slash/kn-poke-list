@@ -25,9 +25,9 @@ class MainLayout extends LitElement {
             render: () => html`<list-page></list-page>`
         },
         {
-            path: 'detail',
+            path: 'detail/:name',
             enter: async () => await import('../pages/detail-page.js'),
-            render: () => html`<detail-page></detail-page>`
+            render: ({name}) => html`<detail-page .name=${name}></detail-page>`
         }
     ]);
 

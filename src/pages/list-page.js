@@ -17,6 +17,7 @@ class ListPage extends LitElement {
         super.connectedCallback();
         getAllPokemon()
             .then(result => {
+                console.log(result.data.results)
                 this.pokemonList = result.data.results;
             })
             .catch(err => console.log(err))
@@ -43,7 +44,7 @@ class ListPage extends LitElement {
                                         <td>--</td>
                                         <td>--</td>
                                         <td>${poke.name}</td>
-                                        <td><a href="/detail">detail</a></td>
+                                        <td><a href="/detail/${poke.name}">detail</a></td>
                                     </tr>
                                 `)}
                         </tbody>
