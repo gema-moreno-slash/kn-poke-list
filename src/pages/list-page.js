@@ -1,4 +1,4 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css, nothing } from "lit";
 import { getAllPokemon } from '../service/poke-service';
 import { map } from 'lit/directives/map.js';
 // import bulma from 'bulma/css/bulma.css';
@@ -12,7 +12,9 @@ class ListPage extends LitElement {
     // static styles = [bulma];
 
     static properties = {
-        pokemonList: {state: true}
+        pokeList: {state: true},
+        loading: {state: true},
+        error: {state: false}
     }
 
     page = 0;
@@ -20,7 +22,9 @@ class ListPage extends LitElement {
 
     constructor() {
         super();
-        this.pokemonList = [];
+        this.pokeList = [];
+        this.loading = true;
+        this.error = false;
     }
 
     createRenderRoot() {
@@ -47,13 +51,16 @@ class ListPage extends LitElement {
             .then(result => {
                 console.log(result.data.results);
                 this.pageMax = result.data.count / LIMIT;
-                this.pokemonList = result.data.results;
+                this.pokeList = result.data.results;
             })
-            .catch(err => console.log(err))
-            .finally(() => console.log('finish'))
+            .catch(err => {
+                this.error = true;
+                console.log(err);
+            })
+            .finally(() => this.loading = false)
     }
 
-    render() {
+    renderTable() {
         return html`
             <div>
                 <h2>List Page</h2>
@@ -68,7 +75,7 @@ class ListPage extends LitElement {
                             </tr>
                         </thead>
                         <tbody>
-                            ${map(this.pokemonList, poke => html`
+                            ${map(this.pokeList, poke => html`
                                     <tr>
                                         <td>--</td>
                                         <td>--</td>
@@ -84,6 +91,17 @@ class ListPage extends LitElement {
                     <button @click=${this.next} ?disabled=${this.page === this.pageMax}>next</button>
                 </div>
             </div>
+        `;
+    }
+
+    render() {
+        const loadingTpl = html`<p>Loading...</p>`;
+        const errorTpl = html`<p>Hubo un error</p>`;
+
+        return html`
+            ${this.loading ? loadingTpl : nothing}
+            ${!this.loading && this.pokeList ? this.renderTable() : nothing}
+            ${!this.loading && this.error ? errorTpl : nothing}
         `;
     }
 
