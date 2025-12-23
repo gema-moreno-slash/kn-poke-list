@@ -42,33 +42,32 @@ class DetailPage extends LitElement {
         }, 1000)
     }
 
-    render() {
-        const loadingTpl = html`
-            <p>Loading...</p>
-        `;
-
-        const infoTpl = html`
-            <h2>Detail ${this.poke?.name}</h2>
+    renderDetail() {
+        return html`
+            <h2>Detail ${this.poke.name}</h2>
             <div>
                 <a href="#" @click=${() => window.history.back()}>Back</a>
             </div>
-            <img class="pic" src=${this.poke?.sprites.front_default} />
+            <img class="pic" src=${this.poke.sprites.front_default} />
             <h3>Stats</h3>
             <ul>
-                <li><poke-desc label="height" .value=${this.poke?.height}></poke-desc></li>
-                <li><poke-desc label="weight" .value=${this.poke?.weight}></poke-desc></li>
+                <li><poke-desc label="height" .value=${this.poke.height}></poke-desc></li>
+                <li><poke-desc label="weight" .value=${this.poke.weight}></poke-desc></li>
             </ul>
             <h3>Type</h3>
             <ul>
                 ${map(this.poke?.types, s => html`<li>${s.type.name}</li>`)}
             </ul>
-        `;
+        `
+    }
 
+    render() {
+        const loadingTpl = html`<p>Loading...</p>`;
         const errorTpl = html`<p>Hubo un error</p>`;
 
         return html`
             ${this.loading ? loadingTpl : nothing}
-            ${!this.loading && this.poke ? infoTpl : nothing}
+            ${!this.loading && this.poke ? this.renderDetail() : nothing}
             ${!this.loading && this.error ? errorTpl : nothing}
         `;
     }
