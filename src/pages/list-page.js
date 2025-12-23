@@ -118,7 +118,7 @@ class ListPage extends LitElement {
                                     <tr>
                                         <td>${poke.id}</td>
                                         <td><img class="pic" src=${poke.pic} /></td>
-                                        <td>${poke.name}</td>
+                                        <td class="is-capitalized">${poke.name}</td>
                                         <td><a class="button" href="/detail/${poke.name}">Detail</a></td>
                                     </tr>
                                 `)}

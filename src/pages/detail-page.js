@@ -62,7 +62,7 @@ class DetailPage extends LitElement {
 
         const height = html`${this.poke.height * 10} cm`;
         const weight = html`${this.poke.weight / 10} kg`;
-        const types = map(this.poke.types, (t) => html`<span class="tag">${t.type.name}</span>`)
+        const types = map(this.poke.types, (t) => html`<span class="tag is-capitalized">${t.type.name}</span>`)
 
         return html`
             <div class="card">
@@ -74,7 +74,7 @@ class DetailPage extends LitElement {
                             </figure>
                         </div>
                         <div class="media-content">
-                            <p class="title is-4">${this.poke.name}</p>
+                            <p class="is-capitalized title is-4">${this.poke.name}</p>
                             <p class="subtitle is-6"># ${this.poke.id}</p>
                         </div>
                     </div>
