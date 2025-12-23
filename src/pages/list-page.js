@@ -7,7 +7,7 @@ const LIMIT = 10;
 
 class ListPage extends LitElement {
 
-    static shadowRootOptions = {...LitElement.shadowRootOptions, mode: "open"};
+    // static shadowRootOptions = {...LitElement.shadowRootOptions, mode: "open"};
 
     // static styles = [bulma];
 
