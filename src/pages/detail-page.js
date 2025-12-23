@@ -27,6 +27,7 @@ class DetailPage extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
+        // Fake loading delay
         setTimeout(() => {
             getPokemon(this.name)
                 .then(result => {
@@ -38,7 +39,7 @@ class DetailPage extends LitElement {
                     console.log(err);
                 })
                 .finally(() => this.loading = false)
-        }, 2000)
+        }, 1000)
     }
 
     render() {
