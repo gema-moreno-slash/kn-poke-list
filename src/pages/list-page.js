@@ -52,9 +52,10 @@ class ListPage extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
+        this.page = this.getPageFromPath();
         this.addEventListener('changePage', this.getPokemonPage);
         const event = new CustomEvent('changePage', {
-            detail: { page: 0 }
+            detail: { page: this.page }
         });
         this.dispatchEvent(event);
     }
@@ -70,6 +71,7 @@ class ListPage extends LitElement {
         getAllPokemon(detail.page * LIMIT, LIMIT)
             .then(result => {
                 this.pageMax = result.data.count / LIMIT;
+                this.setPageInPath(detail.page);
                 return Promise.all(result.data.results.map(poke => getPokemon(poke.name)))
             })
             .then(list => {
@@ -85,6 +87,18 @@ class ListPage extends LitElement {
                 console.log(err);
             })
             .finally(() => this.loading = false)
+    }
+
+    setPageInPath(page) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('page', page);
+        window.history.pushState({}, '', url);
+    }
+
+    getPageFromPath() {
+        const url = new URL(window.location.href);
+        const page = url.searchParams.get('page') !== null ? url.searchParams.get('page') : 0;
+        return page;
     }
 
     renderTable() {
