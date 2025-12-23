@@ -54,7 +54,8 @@ class ListPage extends LitElement {
 
     getPokemonPage(e) {
         const {detail} = e;
-        getAllPokemon(detail.page, this.LIMIT)
+        this.loading = true;
+        getAllPokemon(detail.page * LIMIT, LIMIT)
             .then(result => {
                 this.pageMax = result.data.count / LIMIT;
                 return Promise.all(result.data.results.map(poke => getPokemon(poke.name)))
