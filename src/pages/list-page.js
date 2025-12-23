@@ -1,22 +1,33 @@
-import { LitElement, html, css, nothing } from "lit";
+import { LitElement, html, css, nothing, unsafeCSS } from "lit";
 import { getAllPokemon, getPokemon } from '../service/poke-service';
 import { map } from 'lit/directives/map.js';
-// import bulma from 'bulma/css/bulma.css';
+import bulma from 'bulma/css/bulma.css?inline';
 
-const LIMIT = 10;
+const LIMIT = 5;
 
 class ListPage extends LitElement {
 
-    // static shadowRootOptions = {...LitElement.shadowRootOptions, mode: "open"};
+    static shadowRootOptions = {...LitElement.shadowRootOptions, mode: "open"};
 
-    // static styles = [bulma];
+    static styles = [
+        unsafeCSS(bulma),
+        css`
+            .pic {
+                height: 96px;
+                width: 96px;
+            }
 
-    static styles = css`
-        .pic {
-            height: 96px;
-            width: 96px;
-        }
-    `
+            .table {
+                width: 100%;
+            }
+
+            .paginator{
+                display: flex;
+                justify-content: center;
+                gap: 2rem;
+            }
+        `
+    ]
 
     static properties = {
         pokeList: {state: true},
@@ -32,10 +43,6 @@ class ListPage extends LitElement {
         this.pokeList = [];
         this.loading = true;
         this.error = false;
-    }
-
-    createRenderRoot() {
-        return this;
     }
 
     connectedCallback() {
@@ -78,9 +85,9 @@ class ListPage extends LitElement {
     renderTable() {
         return html`
             <div>
-                <h2>List Page</h2>
+                <h2 class="title is-2">Pokemon List</h2>
                 <div>
-                    <table class="table">
+                    <table class="table is-striped">
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -101,9 +108,9 @@ class ListPage extends LitElement {
                         </tbody>
                     </table>
                 </div>
-                <div>
-                    <button @click=${this.prev} ?disabled=${this.page === 0}>prev</button>
-                    <button @click=${this.next} ?disabled=${this.page === this.pageMax}>next</button>
+                <div class="paginator">
+                    <button class="button is-primary is-medium" @click=${this.prev} ?disabled=${this.page === 0}>prev</button>
+                    <button class="button is-primary is-medium" @click=${this.next} ?disabled=${this.page === this.pageMax}>next</button>
                 </div>
             </div>
         `;

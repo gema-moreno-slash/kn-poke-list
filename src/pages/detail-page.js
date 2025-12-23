@@ -1,8 +1,8 @@
-import { LitElement, html, css, nothing } from "lit";
+import { LitElement, html, css, nothing, unsafeCSS } from "lit";
 import { getPokemon } from '../service/poke-service';
 import { map } from 'lit/directives/map.js';
 import '../components/poke-desc';
-
+import bulma from 'bulma/css/bulma.css?inline';
 class DetailPage extends LitElement {
 
     static properties = {
@@ -14,16 +14,20 @@ class DetailPage extends LitElement {
 
     constructor() {
         super();
+        console.log(bulma)
         this.loading = true;
         this.error = false;
     }
 
-    static styles = css`
-        .pic {
-            height: 96px;
-            width: 96px;
-        }
-    `
+    static styles = [
+        unsafeCSS(bulma),
+        css`
+            .pic {
+                height: 96px;
+                width: 96px;
+            }
+        `
+    ]
 
     connectedCallback() {
         super.connectedCallback();
@@ -44,20 +48,22 @@ class DetailPage extends LitElement {
 
     renderDetail() {
         return html`
-            <h2>Detail ${this.poke.name}</h2>
             <div>
-                <a href="#" @click=${() => window.history.back()}>Back</a>
+                <button class="button is-primary is-medium" @click=${() => window.history.back()}>Back</button>
             </div>
-            <img class="pic" src=${this.poke.sprites.front_default} />
-            <h3>Stats</h3>
-            <ul>
-                <li><poke-desc label="height" .value=${this.poke.height}></poke-desc></li>
-                <li><poke-desc label="weight" .value=${this.poke.weight}></poke-desc></li>
-            </ul>
-            <h3>Type</h3>
-            <ul>
-                ${map(this.poke?.types, s => html`<li>${s.type.name}</li>`)}
-            </ul>
+            <h2 class="title is-2">Detail ${this.poke.name}</h2>
+            <div class="block box">
+                <img class="pic" src=${this.poke.sprites.front_default} />
+                <h3 class="title is-3">Stats</h3>
+                <ul>
+                    <li><poke-desc label="height" .value=${this.poke.height}></poke-desc></li>
+                    <li><poke-desc label="weight" .value=${this.poke.weight}></poke-desc></li>
+                </ul>
+                <h3 class="title is-3">Type</h3>
+                <ul>
+                    ${map(this.poke?.types, s => html`<li>${s.type.name}</li>`)}
+                </ul>
+            </div>
         `
     }
 

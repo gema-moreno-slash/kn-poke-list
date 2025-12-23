@@ -1,16 +1,20 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css, nothing, unsafeCSS } from "lit";
+import bulma from 'bulma/css/bulma.css?inline';
 
 class MainFooter extends LitElement {
 
-    static styles = css`
-        .mainCont {
-            text-align: center;
-        }
-    `;
+    static styles = [
+        unsafeCSS(bulma),
+        css`
+            .mainCont {
+                text-align: center;
+            }
+        `
+    ]
 
     render() {
         return html`
-            <footer class="mainCont">
+            <footer class="mainCont footer">
                 <p>Kodeneko@2026</p>
             </footer>
         `;
