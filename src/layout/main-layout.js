@@ -3,6 +3,7 @@ import { Router } from '@lit-labs/router';
 import bulma from 'bulma/css/bulma.css?inline';
 import '../components/main-header';
 import '../components/main-footer';
+import '../components/main-subhead.js';
 
 class MainLayout extends LitElement {
 
@@ -26,12 +27,18 @@ class MainLayout extends LitElement {
         {
             path: '',
             enter: async () => await import('../pages/list-page.js'),
-            render: () => html`<list-page></list-page>`
+            render: () => html`
+                <main-subhead title="Pokemon List"></main-subhead>
+                <list-page></list-page>
+            `
         },
         {
             path: 'detail/:name',
             enter: async () => await import('../pages/detail-page.js'),
-            render: ({name}) => html`<detail-page .name=${name}></detail-page>`
+            render: ({name}) => html`
+                <main-subhead title="Detail" back="true"></main-subhead>
+                <detail-page .name=${name}></detail-page>
+            `
         }
     ]);
 
@@ -40,7 +47,7 @@ class MainLayout extends LitElement {
             <div class="mainCont">
                 <main-header></main-header>
                 <main class="main">
-                    <p>${this.router.outlet()}</p>
+                    ${this.router.outlet()}
                 </main>
                 <main-footer></main-footer>
             </div>  

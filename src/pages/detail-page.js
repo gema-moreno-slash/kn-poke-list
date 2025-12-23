@@ -28,12 +28,6 @@ class DetailPage extends LitElement {
                 width: 96px;
             }
 
-            .subHeader {
-                display: flex;
-                gap: 1rem;
-                margin-bottom: 2rem;
-            }
-
             .card {
                 max-width: 20rem;
             }
@@ -55,10 +49,7 @@ class DetailPage extends LitElement {
         // Fake loading delay
         setTimeout(() => {
             getPokemon(this.name)
-                .then(result => {
-                    console.log(result.data)
-                    this.poke = result.data;
-                })
+                .then(result => this.poke = result.data)
                 .catch(err => {
                     this.error = true;
                     console.log(err);
@@ -108,10 +99,6 @@ class DetailPage extends LitElement {
         const errorTpl = html`<p>Hubo un error</p>`;
 
         return html`
-            <div class="subHeader">
-                <button class="button is-primary is-link" @click=${() => window.history.back()}>Back</button>
-                <h2 class="title is-2">Detail</h2>
-            </div>
             ${this.loading ? loadingTpl : nothing}
             ${!this.loading && this.poke ? this.renderDetail() : nothing}
             ${!this.loading && this.error ? errorTpl : nothing}
