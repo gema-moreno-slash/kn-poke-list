@@ -5,6 +5,9 @@ class MainHeader extends LitElement {
     static styles = [
         unsafeCSS(bulma),
         css`
+            .mainCont {
+                padding: 2rem 2rem;
+            }
             .pic {
                 height: 96px;
                 width: 96px;
@@ -14,7 +17,7 @@ class MainHeader extends LitElement {
 
     render() {
         return html`
-            <header>
+            <header class="mainCont">
                 <h1 class="title is-1">KN - Pokemon List</h1>
             </header>
         `;

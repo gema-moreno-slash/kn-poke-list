@@ -8,6 +8,7 @@ class MainFooter extends LitElement {
         css`
             .mainCont {
                 text-align: center;
+                margin-top: 2rem;
             }
         `
     ]

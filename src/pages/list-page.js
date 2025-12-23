@@ -2,6 +2,7 @@ import { LitElement, html, css, nothing, unsafeCSS } from "lit";
 import { getAllPokemon, getPokemon } from '../service/poke-service';
 import { map } from 'lit/directives/map.js';
 import bulma from 'bulma/css/bulma.css?inline';
+import '../components/loading-warn';
 
 const LIMIT = 5;
 
@@ -21,10 +22,14 @@ class ListPage extends LitElement {
                 width: 100%;
             }
 
+            .table td {
+                vertical-align: middle;
+            }
+
             .paginator{
                 display: flex;
                 justify-content: center;
-                gap: 2rem;
+                gap: 1rem;
             }
         `
     ]
@@ -102,22 +107,22 @@ class ListPage extends LitElement {
                                         <td>${poke.id}</td>
                                         <td><img class="pic" src=${poke.pic} /></td>
                                         <td>${poke.name}</td>
-                                        <td><a href="/detail/${poke.name}">detail</a></td>
+                                        <td><a class="button" href="/detail/${poke.name}">Detail</a></td>
                                     </tr>
                                 `)}
                         </tbody>
                     </table>
                 </div>
                 <div class="paginator">
-                    <button class="button is-primary is-medium" @click=${this.prev} ?disabled=${this.page === 0}>prev</button>
-                    <button class="button is-primary is-medium" @click=${this.next} ?disabled=${this.page === this.pageMax}>next</button>
+                    <button class="button is-primary is-medium" @click=${this.prev} ?disabled=${this.page === 0}>Prev</button>
+                    <button class="button is-primary is-medium" @click=${this.next} ?disabled=${this.page === this.pageMax}>Next</button>
                 </div>
             </div>
         `;
     }
 
     render() {
-        const loadingTpl = html`<p>Loading...</p>`;
+        const loadingTpl = html`<loading-warn></loading-warn>`;
         const errorTpl = html`<p>Hubo un error</p>`;
 
         return html`
