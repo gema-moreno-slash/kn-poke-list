@@ -9,7 +9,7 @@ class PokeDesc extends LitElement {
         }
         .label {
             font-weight: bold;
-            flex-basis: 10rem;
+            flex-basis: 8rem;
             text-align: left;
         }
         .value {
@@ -26,7 +26,7 @@ class PokeDesc extends LitElement {
         return html`
             <div class="mainCont">
                 <div class="label">${this.label}</div>
-                <div class="value">${this.value}</div>
+                <div class="value"><slot>${this.value}</slot></div>
             </div>
         `;
     }

@@ -1,22 +1,26 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css, unsafeCSS } from "lit";
 import { Router } from '@lit-labs/router';
+import bulma from 'bulma/css/bulma.css?inline';
 import '../components/main-header';
 import '../components/main-footer';
 
 class MainLayout extends LitElement {
 
-    static styles = css`
-        .mainCont {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            box-sizing: border-box;
-            padding: 1rem;
-        }
-        .main {
-            flex: 1;
-        }
-    `;
+    static styles = [
+        unsafeCSS(bulma),
+        css`
+            .mainCont {
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+                box-sizing: border-box;
+            }
+            .main {
+                flex: 1;
+                padding: 2rem 2rem;
+            }
+        `
+    ]
 
     router = new Router(this, [
         {
