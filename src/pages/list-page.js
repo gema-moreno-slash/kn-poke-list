@@ -1,10 +1,15 @@
-import { LitElement, html } from "lit";
+import { LitElement, html, css } from "lit";
 import { getAllPokemon } from '../service/poke-service';
 import { map } from 'lit/directives/map.js';
+// import bulma from 'bulma/css/bulma.css';
 
 const LIMIT = 10;
 
 class ListPage extends LitElement {
+
+    static shadowRootOptions = {...LitElement.shadowRootOptions, mode: "open"};
+
+    // static styles = [bulma];
 
     static properties = {
         pokemonList: {state: true}
@@ -16,6 +21,10 @@ class ListPage extends LitElement {
     constructor() {
         super();
         this.pokemonList = [];
+    }
+
+    createRenderRoot() {
+        return this;
     }
 
     connectedCallback() {
@@ -49,7 +58,7 @@ class ListPage extends LitElement {
             <div>
                 <h2>List Page</h2>
                 <div>
-                    <table>
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>Id</th>
