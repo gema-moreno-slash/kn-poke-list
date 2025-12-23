@@ -1,5 +1,5 @@
 import { LitElement, html, css, nothing } from "lit";
-import { getAllPokemon } from '../service/poke-service';
+import { getAllPokemon, getPokemon } from '../service/poke-service';
 import { map } from 'lit/directives/map.js';
 // import bulma from 'bulma/css/bulma.css';
 
@@ -10,6 +10,13 @@ class ListPage extends LitElement {
     // static shadowRootOptions = {...LitElement.shadowRootOptions, mode: "open"};
 
     // static styles = [bulma];
+
+    static styles = css`
+        .pic {
+            height: 96px;
+            width: 96px;
+        }
+    `
 
     static properties = {
         pokeList: {state: true},
@@ -49,9 +56,16 @@ class ListPage extends LitElement {
         const {detail} = e;
         getAllPokemon(detail.page, this.LIMIT)
             .then(result => {
-                console.log(result.data.results);
                 this.pageMax = result.data.count / LIMIT;
-                this.pokeList = result.data.results;
+                return Promise.all(result.data.results.map(poke => getPokemon(poke.name)))
+            })
+            .then(list => {
+                console.log(list);
+                this.pokeList = list.map(e => ({
+                    id: e.data.id,
+                    pic: e.data.sprites.front_default,
+                    name: e.data.name
+                }));
             })
             .catch(err => {
                 this.error = true;
@@ -77,8 +91,8 @@ class ListPage extends LitElement {
                         <tbody>
                             ${map(this.pokeList, poke => html`
                                     <tr>
-                                        <td>--</td>
-                                        <td>--</td>
+                                        <td>${poke.id}</td>
+                                        <td><img class="pic" src=${poke.pic} /></td>
                                         <td>${poke.name}</td>
                                         <td><a href="/detail/${poke.name}">detail</a></td>
                                     </tr>
