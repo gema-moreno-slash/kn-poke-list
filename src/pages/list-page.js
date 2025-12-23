@@ -90,7 +90,6 @@ class ListPage extends LitElement {
     renderTable() {
         return html`
             <div>
-                <h2 class="title is-2">Pokemon List</h2>
                 <div>
                     <table class="table is-striped">
                         <thead>
