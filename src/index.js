@@ -5,10 +5,8 @@ class AppBootstrap extends LitElement {
 
     router = new Router(this, [
         {
-            path: '/',
-            enter: async () => {
-                await import('./layout/main-layout')
-            },
+            path: '/*',
+            enter: async () => await import('./layout/main-layout'),
             render: () => html`<main-layout></main-layout>`
         }
     ])
