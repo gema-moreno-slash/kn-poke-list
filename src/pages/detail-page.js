@@ -49,10 +49,7 @@ class DetailPage extends LitElement {
         // Fake loading delay
         setTimeout(() => {
             getPokemon(this.name)
-                .then(result => {
-                    console.log(result.data)
-                    this.poke = result.data;
-                })
+                .then(result => this.poke = result.data)
                 .catch(err => {
                     this.error = true;
                     console.log(err);
